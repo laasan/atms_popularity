@@ -1,0 +1,11 @@
+# configfile: "config.yaml"
+
+
+rule combine_data:
+    input:
+        "data/raw/train.csv",
+        "data/raw/test.csv"
+    output:
+        "data/interim/combined_data.csv"
+    shell:
+        "python -m src.data.combine_data {input} {output}"
