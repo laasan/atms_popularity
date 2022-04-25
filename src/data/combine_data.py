@@ -15,6 +15,7 @@ def combine_data(train_path: str, test_path: str, output_path: str):
     """
     train_df = pd.read_csv(train_path, index_col=0)
     test_df = pd.read_csv(test_path, index_col=0)
+
     train_df["is_train"] = 1
     test_df["is_train"] = 0
     combined_df = pd.concat([train_df, test_df], sort=False)

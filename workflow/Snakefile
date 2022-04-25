@@ -1,5 +1,12 @@
 # configfile: "config.yaml"
 
+rule find_gaps:
+    input:
+        "data/interim/combined_data.csv"
+    output:
+        "data/interim/find_gaps.csv"
+    shell:
+        "python -m src.data.find_gaps {input} {output}"
 
 rule combine_data:
     input:
