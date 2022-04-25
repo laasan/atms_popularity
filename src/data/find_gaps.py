@@ -11,7 +11,7 @@ def find_gaps(input_path: str, output_path: str):
     :param output_path: Path to save DataFrame with missing values
     :return:
     """
-    df = pd.read_csv(input_path)
+    df = pd.read_csv(input_path, index_col=0)
 
     df = df[df["address_rus"].isnull()]
 
