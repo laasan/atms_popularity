@@ -1,5 +1,13 @@
 # configfile: "config.yaml"
 
+rule gaps_geocoding:
+    input:
+        "data/interim/find_gaps.csv"
+    output:
+        "data/external/geocoded_data.csv"
+    shell:
+        "python -m src.data.gaps_geocoding {input} {output}"
+
 rule find_gaps:
     input:
         "data/interim/combined_data.csv"
