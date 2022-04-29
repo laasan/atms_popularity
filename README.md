@@ -1,6 +1,6 @@
 ATMs popularity
 ==============================
-
+![Build Status](https://github.com/yugorshkov/atms_popularity/actions/workflows/lint_test.yml/badge.svg?branch=main)
 A short description of the project.
 
 Project Organization
