@@ -1,5 +1,13 @@
 # configfile: "config.yaml"
 
+rule reverse_geocode_address:
+    input:
+        "data/interim/combined_data_without_gaps.csv"
+    output:
+        "data/external/reverse_geocoded_data.json"
+    shell:
+        "python -m src.data.reverse_geocode_address {input} {output}"
+
 rule gaps_filling:
     input:
         "data/interim/combined_data.csv",
@@ -8,7 +16,7 @@ rule gaps_filling:
         "data/interim/combined_data_without_gaps.csv",
         "data/interim/manual_check_data.csv"
     shell:
-        "python -m src.gaps.gaps_filling {input} {output}"
+        "python -m src.data.gaps_filling {input} {output}"
 
 rule gaps_geocoding:
     input:
