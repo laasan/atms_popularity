@@ -1,5 +1,55 @@
 # configfile: "config.yaml"
 
+rule extract_geodata_bbox:
+    input:
+        "data/interim/geodata.geojson"
+    output:
+        "data/interim/geodata_bbox.geojson"
+    conda:
+        "ox"
+    shell:
+        "python -m src.data.extract_geodata_bbox {input} {output}"
+
+rule add_geometry:
+    input:
+        "data/interim/cleaned_data_with_city.csv"
+    output:
+        "data/interim/geodata.geojson"
+    conda:
+        "ox"
+    shell:
+        "python -m src.data.add_geometry {input} {output}"
+
+rule osm_tags_adm:
+    input:
+        "data/external/russia-bbox.osm.pbf"
+    output:
+        "data/external/russia-bbox-tags_adm.osm.pbf"
+    conda:
+        "osmium-tool"
+    shell:
+        "osmium tags-filter {input} boundary=administrative -o {output}"
+
+rule osm_tags_poi:
+    input:
+        "data/external/russia-bbox.osm.pbf"
+    output:
+        "data/external/russia-bbox-tags_poi.osm.pbf"
+    conda:
+        "osmium-tool"
+    shell:
+        "osmium tags-filter {input} aeroway=terminal amenity building=office,train_station highway=bus_stop shop tourism=hotel -o {output}"
+
+rule osm_extract_bbox:
+    input:
+        "data/external/russia-latest.osm.pbf"
+    output:
+        "data/external/russia-bbox.osm.pbf"
+    conda:
+        "osmium-tool"
+    shell:
+        "osmium extract -b 32.2,41.14,49.89,58.26 {input} -o {output}"
+
 rule get_osm_data:
     # comment output for activate download and update OSM data
     output:
