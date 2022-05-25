@@ -1,14 +1,14 @@
 # configfile: "config.yaml"
 
-rule extract_geodata_bbox:
+rule bbox_geodata:
     input:
         "data/interim/geodata.geojson"
     output:
-        "data/interim/geodata_bbox.geojson"
+        "data/interim/bbox_geodata.geojson"
     conda:
         "ox"
     shell:
-        "python -m src.data.extract_geodata_bbox {input} {output}"
+        "python -m src.data.bbox_geodata 32.2 41.14 49.89 58.26 {input} {output}"
 
 rule add_geometry:
     input:
