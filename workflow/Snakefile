@@ -1,5 +1,14 @@
 # configfile: "config.yaml"
 
+rule get_osm_data:
+    # comment output for activate download and update OSM data
+    output:
+        "data/external/russia-latest.osm.pbf"
+    conda:
+        "ox"
+    shell:
+        "python -m src.data.get_osm_data russia data/external"
+
 rule add_city:
     input:
         ["data/interim/cleaned_data_v2.csv", "data/external/geocoded_addresses.json"]
