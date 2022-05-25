@@ -1,44 +1,34 @@
 # configfile: "config.yaml"
 
-rule reverse_geocode_address:
+rule add_city:
     input:
-        "data/interim/combined_data_without_gaps.csv"
+        ["data/interim/cleaned_data_v2.csv", "data/external/geocoded_addresses.json"]
     output:
-        "data/external/reverse_geocoded_data.json"
+        "data/interim/cleaned_data_with_city.csv"
     shell:
-        "python -m src.data.reverse_geocode_address {input} {output}"
+        "python -m src.features.add_city {input} {output}"
 
-rule gaps_filling:
+rule clean_address:
     input:
-        "data/interim/combined_data.csv",
-        "data/external/geocoded_data.csv"
+        ["data/interim/combined_data_v2.csv", "data/external/geocoded_addresses.json"]
     output:
-        "data/interim/combined_data_without_gaps.csv",
-        "data/interim/manual_check_data.csv"
+        ["data/interim/cleaned_data_v2.csv", "data/interim/manual_address_check_v2.csv"]
     shell:
-        "python -m src.data.gaps_filling {input} {output}"
+        "python -m src.data.clean_address {input} {output} 1"
 
-rule gaps_geocoding:
+rule geocode_address:
     input:
-        "data/interim/find_gaps.csv"
+        "data/interim/combined_data_v2.csv"
     output:
-        "data/external/geocoded_data.csv"
+        "data/external/geocoded_addresses.json"
     shell:
-        "python -m src.data.gaps_geocoding {input} {output}"
-
-rule find_gaps:
-    input:
-        "data/interim/combined_data.csv"
-    output:
-        "data/interim/find_gaps.csv"
-    shell:
-        "python -m src.data.find_gaps {input} {output}"
+        "python -m src.data.geocode_address {input} {output}"
 
 rule combine_data:
     input:
         "data/raw/train.csv",
         "data/raw/test.csv"
     output:
-        "data/interim/combined_data.csv"
+        "data/interim/combined_data_v2.csv"
     shell:
         "python -m src.data.combine_data {input} {output}"
