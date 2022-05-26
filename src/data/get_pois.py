@@ -70,7 +70,7 @@ def get_pois(input_paths: list[str], output_path: str):
     gdfs = []
     for geom in enumerate(gdf["poi_buffer"].values, start=1):
         try:
-            print(f"Ищем точки интерса вокруг объекта {geom[0]} / {len(gdf['poi_buffer'].values)}")
+            print(f"Ищем точки интереса {geom[0]} / {len(gdf['poi_buffer'].values)}...")
             gdfs.append(pyrosm_query(fp, geom[1], columns_filter))
         except KeyError:
             print(f"Точка {geom[0]} не заслуживает внимания")
