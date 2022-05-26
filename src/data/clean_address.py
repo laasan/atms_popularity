@@ -8,9 +8,10 @@ import pandas as pd
 @click.argument("output_paths", type=click.Path(), nargs=2)
 @click.argument("qc_geo", type=click.INT)
 def clean_address(input_paths: list[str], output_paths: list[str], qc_geo: int):
-    """The function merges raw data and geocoding results.
+    """The function merges raw data and geocoding results
     :param input_paths: Paths to read combined DataFrame and geocoded addresses
-    :param output_paths: Paths to save DataFrame with high coordinate accuracy and data for manual address checking
+    :param output_paths: Paths to save DataFrame with high coordinate accuracy
+                        and data for manual address checking
     :param qc_geo: Address coordinate accuracy
     :return:
     """

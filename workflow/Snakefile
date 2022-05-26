@@ -1,5 +1,16 @@
 # configfile: "config.yaml"
 
+rule get_pois:
+    input:
+        ["data/interim/bbox_geodata.geojson", "data/external/russia-bbox-tags_poi.osm.pbf"]
+    output:
+        "data/interim/pois.geojson"
+    conda:
+        "ox"
+    shell:
+        "python -m src.data.get_pois {input} {output}"
+
+
 rule bbox_geodata:
     input:
         "data/interim/geodata.geojson"

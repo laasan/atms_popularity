@@ -21,5 +21,6 @@ def add_geometry(input_path: str, output_path: str):
     gdf.to_file(output_path, driver="GeoJSON")
     print(gdf.shape)
 
+
 if __name__ == "__main__":
     add_geometry()
