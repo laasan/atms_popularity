@@ -21,7 +21,7 @@ def combine_data(train_path: str, test_path: str, output_path: str):
     combined_df = pd.concat([train_df, test_df], sort=False)
     print("Train and test data are successfully combined.")
 
-    combined_df.to_csv(output_path)
+    combined_df.to_csv(output_path, index=False)
 
 
 if __name__ == "__main__":
