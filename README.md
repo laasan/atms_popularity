@@ -1,6 +1,6 @@
 ATMs popularity
 ==============================
-[![Build Status](https://github.com/yugorshkov/atms_popularity/actions/workflows/github_runners_lint_test.yml/badge.svg?branch=main)](https://github.com/yugorshkov/atms_popularity/actions/workflows/github_runners_lint_test.yml/badge.svg?branch=main)
+[![Build Status](https://github.com/yugorshkov/atms_popularity/actions/workflows/github_runners_lint_test.yml/badge.svg?branch=main)](https://github.com/yugorshkov/atms_popularity/actions/workflows/github_runners_lint_test.yml)
 
 A short description of the project.
 
