@@ -1,5 +1,15 @@
 # configfile: "config.yaml"
 
+rule turn_pois:
+    input:
+        ["data/interim/pois.geojson", "data/interim/bbox_geodata.geojson"]
+    output:
+        "data/interim/features_pois.csv"
+    conda:
+        "ox"
+    shell:
+        "python -m src.features.turn_pois {input} {output}"
+
 rule get_pois:
     input:
         ["data/interim/bbox_geodata.geojson", "data/external/russia-bbox-tags_poi.osm.pbf"]
