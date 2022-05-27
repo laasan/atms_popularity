@@ -1,5 +1,15 @@
 # configfile: "config.yaml"
 
+rule near_atms_dist:
+    input:
+        ["data/interim/bbox_geodata.geojson", "data/external/russia-bbox-tags_poi.osm.pbf"]
+    output:
+        "data/interim/features_nearest_atm_dist.csv"
+    conda:
+        "ox"
+    shell:
+        "python -m src.features.near_atms_dist {input} {output}"
+
 rule turn_pois:
     input:
         ["data/interim/pois.geojson", "data/interim/bbox_geodata.geojson"]
@@ -40,16 +50,6 @@ rule add_geometry:
         "ox"
     shell:
         "python -m src.data.add_geometry {input} {output}"
-
-rule osm_tags_adm:
-    input:
-        "data/external/russia-bbox.osm.pbf"
-    output:
-        "data/external/russia-bbox-tags_adm.osm.pbf"
-    conda:
-        "osmium-tool"
-    shell:
-        "osmium tags-filter {input} boundary=administrative -o {output}"
 
 rule osm_tags_poi:
     input:

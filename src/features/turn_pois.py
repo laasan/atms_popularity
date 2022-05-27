@@ -6,10 +6,9 @@ import geopandas as gpd
 @click.argument("input_paths", type=click.Path(exists=True), nargs=2)
 @click.argument("output_path", type=click.Path())
 def turn_poi(input_paths: str, output_path: str):
-    """
-
-    :param input_paths:
-    :param output_path:
+    """Function turns uploaded data on pois into a features for modeling
+    :param input_paths: Paths to read raw pois and main GeoDataFrame
+    :param output_path: Path to save poi features DataFrame
     :return:
     """
     pois = gpd.read_file(input_paths[0])
