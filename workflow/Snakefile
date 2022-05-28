@@ -2,13 +2,14 @@
 
 rule add_pois:
     input:
-        ["data/interim/bbox_geodata.geojson", "data/interim/features_pois.csv"]
+        ["data/interim/bbox_geodata.geojson", "data/interim/features_pois.csv",
+        "data/interim/features_nearest_atm_dist.csv"]
     output:
-        "data/interim/data_with_pois.csv"
+        "data/interim/data_with_features.csv"
     conda:
         "ox"
     shell:
-        "python -m src.features.add_pois {input} {output}"
+        "python -m src.features.add_features {input} {output}"
 
 rule near_atms_dist:
     input:
