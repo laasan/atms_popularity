@@ -1,5 +1,13 @@
 # configfile: "config.yaml"
 
+rule prepare_data:
+    input:
+        "data/interim/data_with_features.csv"
+    output:
+        ["data/processed/train.csv", "data/processed/test.csv"]
+    shell:
+        "python -m src.data.prepare_data {input} {output}"
+
 rule add_pois:
     input:
         ["data/interim/bbox_geodata.geojson", "data/interim/features_pois.csv",

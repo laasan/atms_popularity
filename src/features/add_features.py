@@ -6,7 +6,7 @@ import pandas as pd
 @click.command()
 @click.argument("input_paths", type=click.Path(exists=True), nargs=3)
 @click.argument("output_path", type=click.Path())
-def add_features(input_paths: str, output_path: str):
+def add_features(input_paths: list[str], output_path: str):
     """Function adds features to the main DataFrame
     :param input_paths: Path to read main DataFrame and features data
     :param output_path: Path to save main DataFrame
