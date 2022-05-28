@@ -1,5 +1,15 @@
 # configfile: "config.yaml"
 
+rule add_pois:
+    input:
+        ["data/interim/bbox_geodata.geojson", "data/interim/features_pois.csv"]
+    output:
+        "data/interim/data_with_pois.csv"
+    conda:
+        "ox"
+    shell:
+        "python -m src.features.add_pois {input} {output}"
+
 rule near_atms_dist:
     input:
         ["data/interim/bbox_geodata.geojson", "data/external/russia-bbox-tags_poi.osm.pbf"]
