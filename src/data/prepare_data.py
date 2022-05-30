@@ -15,24 +15,14 @@ def prepare_data(input_path: str, output_paths: list[str]):
     """
     df = pd.read_csv(input_path)
 
-    df.drop(
-        columns=[
-            "atm_group",
-            "address",
-            "address_rus",
-            "geo_lat",
-            "geo_lon",
-            "geometry",
-        ],
-        inplace=True,
-    )
+    df = df.fillna(0)
     train_df = df[df["is_train"] == 1]
     train_df = train_df.drop(columns=["is_train"])
     test_df = df[df["is_train"] == 0]
     test_df = test_df.drop(columns=["is_train", "target"])
 
-    train_df.to_csv(output_paths[0])
-    test_df.to_csv(output_paths[1])
+    train_df.to_csv(output_paths[0], index=False)
+    test_df.to_csv(output_paths[1], index=False)
 
 
 if __name__ == "__main__":
