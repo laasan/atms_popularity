@@ -1,5 +1,15 @@
 # configfile: "config.yaml"
 
+rule train:
+    input:
+        "data/processed/train.csv"
+    output:
+        "models/cb_model.cbm"
+    conda:
+        "atms_popularity_dev"
+    shell:
+        "python -m src.models.train_model {input} {output}"
+
 rule prepare_data:
     input:
         "data/interim/data_with_features.csv"
