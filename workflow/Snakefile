@@ -2,13 +2,23 @@
 
 rule train:
     input:
-        "data/processed/train.csv"
+        ["data/processed/train.csv", "models/hyperparams.json"]
     output:
         "models/cb_model.cbm"
     conda:
         "atms_popularity_dev"
     shell:
         "python -m src.models.train_model {input} {output}"
+
+rule hyperparams_tuning:
+    input:
+        "data/processed/train.csv"
+    output:
+        "models/hyperparams.json"
+    conda:
+        "atms_popularity_dev"
+    shell:
+        "python -m src.models.hyperparams_tuning {input} {output}"
 
 rule prepare_data:
     input:

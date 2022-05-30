@@ -1,4 +1,5 @@
 import click
+import json
 import mlflow
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -46,14 +47,14 @@ FEATURES = [
 ]
 CAT_FEATURES = ["atm_group", "geo_city"]
 
-mlflow.set_experiment('catboost')
+mlflow.set_experiment("catboost")
 
 
 @click.command()
-@click.argument("input_path", type=click.Path(exists=True))
+@click.argument("input_paths", type=click.Path(exists=True), nargs=2)
 @click.argument("output_path", type=click.Path())
-def train(input_path: str, output_path: str):
-    df = pd.read_csv(input_path)
+def train(input_paths: list[str], output_path: str):
+    df = pd.read_csv(input_paths[0])
     df.set_index("id", inplace=True)
     df["atm_group"] = df["atm_group"].apply(str)
 
@@ -64,20 +65,20 @@ def train(input_path: str, output_path: str):
     train_pool = Pool(x_train, y_train, cat_features=CAT_FEATURES)
     val_pool = Pool(x_val, y_val, cat_features=CAT_FEATURES)
 
-    params = {
-        "iterations": 500,
-        "learning_rate": 0.1,
-        "eval_metric": "RMSE",
-        "depth": 4,
-        "l2_leaf_reg": 2,
+    with open(input_paths[1]) as f:
+        params = json.load(f)
+    params.update({
+        "iterations": 800,
+        # "eval_metric": "RMSE",
         "random_seed": 14,
-        'custom_metric': ['MAE', 'RMSE']
-    }
+        "custom_metric": ["MAE", "RMSE"],
+    })
+
     mlflow.log_params(params)
 
     model = CatBoostRegressor(**params)
     model.fit(train_pool, eval_set=val_pool, verbose=100)
-    score = model.get_best_score()['validation']
+    score = model.get_best_score()["validation"]
     model.save_model(output_path)
 
     mlflow.log_metrics(score)
