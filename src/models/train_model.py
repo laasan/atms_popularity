@@ -3,7 +3,7 @@ import json
 import mlflow
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from catboost import CatBoostRegressor, Pool, metrics
+from catboost import CatBoostRegressor, Pool
 
 FEATURES = [
     "atm",
