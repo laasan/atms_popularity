@@ -42,12 +42,15 @@ FEATURES = [
     "veterinary",
     "pois_cnt",
     "near_atm_dist",
-    "atm_cnt_adrs",
-    "atm_cnt_city",
-    "atmgroup_cnt_city",
-    "atmgroup_share_city",
+    # "atm_cnt_adrs",
+    # "atm_cnt_city",
+    # "atmgroup_cnt_city",
+    # "atmgroup_share_city",
 ]
-CAT_FEATURES = ["atm_group", "geo_city"]
+CAT_FEATURES = [
+    # "atm_group",
+    "geo_city"
+]
 
 
 @click.command()
@@ -56,10 +59,9 @@ CAT_FEATURES = ["atm_group", "geo_city"]
 def hyperparams_tuning(input_path: str, output_path: str):
     df = pd.read_csv(input_path)
     df.set_index("id", inplace=True)
-    df["atm_group"] = df["atm_group"].apply(str)
 
     x_train, x_val, y_train, y_val = train_test_split(
-        df[FEATURES + CAT_FEATURES], df["target"], test_size=0.2, random_state=14
+        df[FEATURES + CAT_FEATURES], df["target"], test_size=0.15, random_state=14
     )
     train_pool = catboost.Pool(x_train, y_train, cat_features=CAT_FEATURES)
     val_pool = catboost.Pool(x_val, y_val, cat_features=CAT_FEATURES)

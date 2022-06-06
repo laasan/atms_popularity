@@ -11,47 +11,10 @@ load_dotenv()
 remote_server_uri = os.getenv("MLFLOW_TRACKING_URI")
 mlflow.set_tracking_uri(remote_server_uri)
 
-FEATURES = [
-    "atm",
-    "attraction",
-    "bank",
-    "bar",
-    "bureau_de_change",
-    "bus_station",
-    "bus_stop",
-    "cafe",
-    "clinic",
-    "college",
-    "dentist",
-    "fast_food",
-    "fuel",
-    "hospital",
-    "hotel",
-    "ice_cream",
-    "marketplace",
-    "office",
-    "parking",
-    "payment_terminal",
-    "pharmacy",
-    "photostudio",
-    "post_office",
-    "pub",
-    "public_building",
-    "restaurant",
-    "shop",
-    "theatre",
-    "townhall",
-    "train_station",
-    "university",
-    "veterinary",
-    "pois_cnt",
-    "near_atm_dist",
-    "atm_cnt_adrs",
-    "atm_cnt_city",
-    "atmgroup_cnt_city",
-    "atmgroup_share_city",
+CAT_FEATURES = [
+    # "atm_group",
+    "geo_city"
 ]
-CAT_FEATURES = ["atm_group", "geo_city"]
 
 
 @click.command()
@@ -63,10 +26,10 @@ def train(input_paths: list[str], output_path: str):
 
         df = pd.read_csv(input_paths[0])
         df.set_index("id", inplace=True)
-        df["atm_group"] = df["atm_group"].apply(str)
-
+        y = df["target"]
+        X = df.drop("target", axis=1)
         x_train, x_val, y_train, y_val = train_test_split(
-            df[FEATURES + CAT_FEATURES], df["target"], test_size=0.2, random_state=14
+            X, y, test_size=0.15, random_state=14
         )
 
         train_pool = Pool(x_train, y_train, cat_features=CAT_FEATURES)
