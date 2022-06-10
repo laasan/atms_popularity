@@ -19,8 +19,9 @@
 docker run -p 5001:8080 laggerkrd/atms_popularity
 ```
 
-Скачать [тестовые файлы](examples "Необязательная подсказка")
+Скачать [тестовые файлы](examples "examples")
 
+Отправить запрос
 ```python
 import requests
 import pandas as pd
@@ -38,4 +39,9 @@ http_data = test_df.to_json(orient='split')
 response = requests.post(url=url, headers=headers, data=http_data)
 
 print(f'Predictions: {response.text}')
+```
+Сохранить результаты в .csv
+```python
+result = pd.DataFrame({"id": list(test_df.index), "popularity_idx": response.json()})
+result.to_csv("model_predict.csv", index=False)
 ```
