@@ -18,7 +18,9 @@
 ```sh
 docker run -p 5001:8080 laggerkrd/atms_popularity
 ```
-тест
+
+Скачать [тестовые файлы](examples "Необязательная подсказка")
+
 ```python
 import requests
 import pandas as pd

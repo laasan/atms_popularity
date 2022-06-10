@@ -1,14 +1,16 @@
 import requests
 import pandas as pd
 
-test_df = pd.read_csv("data/processed/train.csv")
+test_df = pd.read_csv("examples/test5.csv")
 test_df.set_index("id", inplace=True)
-test_df = test_df.drop("target", axis=1)
-x_holdout = test_df.iloc[0:3]
 
-headers = {"Content-Type": "application/json"}
-response = requests.post("http://127.0.0.1:5003/invocations",
-                         data=x_holdout.to_json(orient="split"),
-                         headers=headers)
+host = '127.0.0.1'
+port = '5001'
 
-print(response.content)
+url = f'http://{host}:{port}/invocations'
+headers = {'Content-Type': 'application/json'}
+http_data = test_df.to_json(orient='split')
+
+response = requests.post(url=url, headers=headers, data=http_data)
+
+print(f'Predictions: {response.text}')
