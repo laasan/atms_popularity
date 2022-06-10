@@ -1,5 +1,5 @@
 <p align="center" width="100%">
-    <img width="33%" src="https://i.imgur.com/PwMDaLx.png"> 
+    <img width="20%" src="https://i.imgur.com/PwMDaLx.png"> 
 </p>
 
 ## Определение популярности геолокации для размещения банкомата 
