@@ -1,6 +1,5 @@
 import folium
 from folium.plugins import MarkerCluster
-import pandas as pd
 
 
 def folium_map(df, pois):
