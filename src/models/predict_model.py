@@ -1,19 +1,24 @@
 import requests
 import pandas as pd
 
-test_df = pd.read_csv("examples/test5.csv")
-test_df.set_index("id", inplace=True)
 
-host = "127.0.0.1"
-port = "5001"
+def atm_geo_popularity(df):
+    test_df = df.set_index("id")
 
-url = f"http://{host}:{port}/invocations"
-headers = {"Content-Type": "application/json"}
-http_data = test_df.to_json(orient="split")
+    host = "127.0.0.1"
+    port = "5001"
 
-response = requests.post(url=url, headers=headers, data=http_data)
+    url = f"http://{host}:{port}/invocations"
+    headers = {"Content-Type": "application/json"}
+    http_data = test_df.to_json(orient="split")
 
-print(f"Predictions: {response.text}")
+    response = requests.post(url=url, headers=headers, data=http_data)
+    result = pd.DataFrame(
+        {"id": list(test_df.index), "popularity_idx": response.json()}
+    )
 
-result = pd.DataFrame({"id": list(test_df.index), "popularity_idx": response.json()})
-result.to_csv("model_predict.csv", index=False)
+    return result
+
+
+if __name__ == "__main__":
+    atm_geo_popularity()
